@@ -1,0 +1,5 @@
+---
+version: '2'
+services:
+  dist_counter_node:
+    image: test/distributedcounternode

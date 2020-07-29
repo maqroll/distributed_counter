@@ -1,0 +1,1 @@
+docker-compose -f ensemble.yml up --scale dist_counter_node=10

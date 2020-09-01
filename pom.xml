@@ -16,7 +16,7 @@
 		<metrics.version>4.1.2</metrics.version>
 		<jcommander.version>1.78</jcommander.version>
 		<slf4j.version>1.7.30</slf4j.version>
-		<version.infinispan>11.0.1.Final</version.infinispan>
+		<aeron.version>1.29.0</aeron.version>
 	</properties>
 
 	<build>
@@ -78,11 +78,14 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.infinispan</groupId>
-				<artifactId>infinispan-bom</artifactId>
-				<version>${version.infinispan}</version>
-				<type>pom</type>
-				<scope>import</scope>
+				<groupId>io.aeron</groupId>
+				<artifactId>aeron-all</artifactId>
+				<version>${aeron.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.aeron</groupId>
+				<artifactId>aeron-agent</artifactId>
+				<version>${aeron.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -142,6 +145,14 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>io.aeron</groupId>
+			<artifactId>aeron-all</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.aeron</groupId>
+			<artifactId>aeron-agent</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 		</dependency>
@@ -173,9 +184,5 @@
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.infinispan</groupId>
-			<artifactId>infinispan-core</artifactId>
-		</dependency>
-	</dependencies>	
+	</dependencies>
 </project>

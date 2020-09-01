@@ -1,5 +1,69 @@
 ---
 version: '2'
 services:
-  dist_counter_node:
-    image: test/distributedcounternode
+  raft-1:
+    image: test/aeron
+    hostname: raft-1
+    shm_size: '256mb'
+    extra_hosts:
+      - "raft-2:172.20.128.2"
+      - "raft-3:172.20.128.3"
+      - "client-1:172.20.128.4"
+      - "client-2:172.20.128.5"
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.1
+  raft-2:
+    image: test/aeron
+    hostname: raft-2
+    shm_size: '256mb'
+    extra_hosts:
+      - "raft-1:172.20.128.1"
+      - "raft-3:172.20.128.3"
+      - "client-1:172.20.128.4"
+      - "client-2:172.20.128.5"
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.2
+  raft-3:
+    image: test/aeron
+    hostname: raft-3
+    shm_size: '256mb'
+    extra_hosts:
+      - "raft-1:172.20.128.1"
+      - "raft-2:172.20.128.2"
+      - "client-1:172.20.128.4"
+      - "client-2:172.20.128.5"
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.3
+  client-1:
+    image: test/aeron
+    command: ["java", "-cp", "/distributed-counter.jar:/aeron-all.jar", "test.AeronClient"]
+    shm_size: '512mb'
+    hostname: client-1
+    extra_hosts:
+      - "raft-1:172.20.128.1"
+      - "raft-2:172.20.128.2"
+      - "raft-3:172.20.128.3"
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.4
+  client-2:
+    image: test/aeron
+    command: ["java", "-cp", "/distributed-counter.jar:/aeron-all.jar", "test.AeronClient"]
+    shm_size: '512mb'
+    hostname: client-2
+    extra_hosts:
+      - "raft-1:172.20.128.1"
+      - "raft-2:172.20.128.2"
+      - "raft-3:172.20.128.3"
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.5
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          ip_range: 172.28.5.0/24

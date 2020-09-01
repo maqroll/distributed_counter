@@ -1,1 +1,1 @@
-docker build -f ./Dockerfile -t test/distributedcounternode .
+docker build -f ./Dockerfile -t test/aeron .
